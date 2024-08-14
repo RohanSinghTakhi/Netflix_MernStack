@@ -1,18 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Header from './Components/Header'
-import Body from './Components/Body'
+import { useState } from 'react';
+import './App.css';
+import Header from './Components/Header';
+import Body from './Components/Body';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Login from './Components/Login';
+import Browse from './Components/browse'; 
+const approuter = createBrowserRouter([
+  {
+    path: "/",
+    element: <Login />,
+  },
+  {
+    path: "/browse",
+    element: <Browse />, 
+  },
+]);
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
-    <Body/>
+      <RouterProvider router={approuter} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
