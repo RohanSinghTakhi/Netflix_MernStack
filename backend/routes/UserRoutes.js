@@ -1,0 +1,10 @@
+const express = require('express');
+const { Login, Register }= require('../controllers/User');
+const Router = express.Router();
+Router.route('/register').post(Register);
+Router.route('/Login').post(Login);
+
+module.exports = Router;
+
+
+// Router.get('/', (req, res) => res.send('Hello World!'));
