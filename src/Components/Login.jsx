@@ -3,6 +3,9 @@ import Header from './Header'
 import axios from "axios"
 import { END_POINT } from '../utils/constant'
 import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../redux/userSlice'
 
 function Login() {
   const [isLogin ,setislogin] = useState(false)
@@ -10,6 +13,8 @@ function Login() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const nevigate = useNavigate()
+  const dispatch = useDispatch()
 
   const loginHandler = () => {
     setislogin(!isLogin);
@@ -18,20 +23,35 @@ function Login() {
   const getinputdata = async (e)=>{
     e.preventDefault();
     if(isLogin){
-      try{
-        const res= await  axios.post(`${END_POINT}/Login`,{email,password},{
-          headers:{
-            'Content-Type':'application/json'
-          },withCredentials:true
-        })
-        console.log(res)
-        if(res.data.success){
-          toast.success(res.data.message);
+      try {
+        const res = await axios.post(
+            `${END_POINT}/Login`,
+            { email, password },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                withCredentials: true,
+            }
+        );
+        
+        if (res.data.success) {
+            toast.success(res.data.message);
+            dispatch(setUser(res.data.user));
+            nevigate("/browse");
+        } else {
+            toast.error(res.data.message);
         }
-      }catch(error){
-        toast.error(error.response.data.message);
-        console.log(error)
-      }
+        
+    } catch (error) {
+        if (error.response && error.response.data) {
+            toast.error(error.response.data.message);
+        } else {
+            toast.error("An unexpected error occurred. Please try again.");
+        }
+        console.log(error);
+    }
+
     }else{
     try{
       const res= await  axios.post(`${END_POINT}/register`,{fullName,email,password},{
@@ -43,6 +63,7 @@ function Login() {
       if(res.data.success){
         toast.success(res.data.message);
       }
+      setislogin(true)
     }catch(error){
       toast.error(error.response.data.message);
       console.log(error)
@@ -50,6 +71,7 @@ function Login() {
     setFullName("");
     setEmail("");
     setPassword("");
+
   }
 
 

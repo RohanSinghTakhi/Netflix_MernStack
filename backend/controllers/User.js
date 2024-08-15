@@ -35,11 +35,12 @@ const Login = async (req, res) => {
         const token = jwt.sign(tokenData, JWT_SECRET, { expiresIn: "1h" });
 
         return res.status(200)
-            .cookie("token", token, { httpOnly: true }) // Corrected option
-            .json({
-                message: "Welcome back",
-                success: true
-            });
+    .cookie("token", token, { httpOnly: true })
+    .json({
+        message: "Welcome back",
+        user: user,  
+        success: true
+    });
 
     } catch (error) {
         return res.status(500).json({
