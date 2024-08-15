@@ -4,7 +4,8 @@ import Header from './Components/Header';
 import Body from './Components/Body';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './Components/Login';
-import Browse from './Components/browse'; 
+import Browse from './Components/browse';
+import {Toaster} from 'react-hot-toast'; 
 const approuter = createBrowserRouter([
   {
     path: "/",
@@ -22,6 +23,7 @@ function App() {
   return (
     <>
       <RouterProvider router={approuter} />
+      <Toaster/>
     </>
   );
 }

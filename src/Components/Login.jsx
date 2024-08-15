@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import Header from './Header'
-
-
+import axios from "axios"
+import { END_POINT } from '../utils/constant'
+import toast from 'react-hot-toast'
 
 function Login() {
   const [isLogin ,setislogin] = useState(false)
@@ -11,13 +12,41 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const loginHandler = () => {
-    setIsLogin(!isLogin);
+    setislogin(!isLogin);
   }
 
-  const getinputdata = (e)=>{
+  const getinputdata = async (e)=>{
     e.preventDefault();
-    console.log(fullName, password, email
-    )
+    if(isLogin){
+      try{
+        const res= await  axios.post(`${END_POINT}/Login`,{email,password},{
+          headers:{
+            'Content-Type':'application/json'
+          },withCredentials:true
+        })
+        console.log(res)
+        if(res.data.success){
+          toast.success(res.data.message);
+        }
+      }catch(error){
+        toast.error(error.response.data.message);
+        console.log(error)
+      }
+    }else{
+    try{
+      const res= await  axios.post(`${END_POINT}/register`,{fullName,email,password},{
+        headers:{
+          'Content-Type':'application/json'
+        },withCredentials:true
+      })
+      console.log(res)
+      if(res.data.success){
+        toast.success(res.data.message);
+      }
+    }catch(error){
+      toast.error(error.response.data.message);
+      console.log(error)
+    }}
     setFullName("");
     setEmail("");
     setPassword("");
@@ -39,7 +68,7 @@ function Login() {
             <input value={email} onChange={(e)=>setEmail(e.target.value)}  type='email' placeholder='Email' className='outline-none p-3 my-2 rounded-sm bg-gray-800 text-white' />
             <input value={password} onChange={(e)=>setPassword(e.target.value)}  type='password' placeholder='Password' className='outline-none p-3 my-2 rounded-sm bg-gray-800 text-white' />
             <button type='submit' onClick={getinputdata} className='bg-red-600 mt-6 p-3 text-white rounded-sm font-medium'>{`${isLoading ? "loading...":(isLogin?"Login":"Signup")}`}</button>           
-            <p className='text-white mt-2'>{isLogin ? "New to Netflix?" : "Already have an account?"}<span onClick={loginHandler} className='ml-1 text-blue-900 font-medium cursor-pointer'>{isLogin ? "Signup" : "Login"}</span></p>            </div>
+            <p className='text-white mt-2'>{isLogin ? "New to Netflix?" : "Already have an account?"}<span  className='ml-1 text-blue-900 font-medium cursor-pointer ' onClick={loginHandler} >{isLogin ? "Signup" : "Login"}</span></p>            </div>
     </form>
 </div>
   )
