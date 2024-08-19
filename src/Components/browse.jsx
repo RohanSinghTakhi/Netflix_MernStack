@@ -16,6 +16,10 @@ function Browse() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.app.user);
 
+  usePopularMovies();
+  useTopRatedMovies();
+  useUpcomingMovies();
+
   useEffect(() => {
     if (!user) {
       navigate("/");
@@ -25,26 +29,26 @@ function Browse() {
   useEffect(() => {
     const fetchNowPlayingMovies = async () => {
       try {
-        const options =  {
+        const options = {
           method: 'GET',
           headers: {
             accept: 'application/json',
             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZGJlZjViMDUzNWE3OGYwMjllMTQ0NDE5NTQ4MjM4MCIsInN1YiI6IjY1MDRhMjNkNTllOGE5MDExZWNhYTVjZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.LTBaAb_2NPRGPr2HeGszyFDP-onLh-fiL7fzmnOFZUg'
-          }
+          },
+          timeout: 10000 // 10 seconds timeout
         };
         const res = await axios.get(Now_Playing_Movie, options);
         dispatch(getNowPlayingMovies(res.data.results));
       } catch (error) {
-        console.log(error);
+        console.log('Error fetching Now Playing movies:', error);
       }
     };
-
+  
     fetchNowPlayingMovies();
-    usePopularMovies();
-    useTopRatedMovies();
-    useUpcomingMovies();
-  }, [dispatch]); 
-
+  }, [dispatch]);
+  
+  
+ 
   return (
     <>
       <Header />
