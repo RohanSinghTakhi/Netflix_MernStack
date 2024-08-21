@@ -20,7 +20,8 @@ This is a Netflix clone built using the MERN stack (MongoDB, Express, React, Nod
 
 
 ### Log In
-![Uploading image.png…]()
+![image](https://github.com/user-attachments/assets/4cb3ed09-22c2-4c8b-a00b-44bb63be6bfc)
+
 
 
 ### Home
