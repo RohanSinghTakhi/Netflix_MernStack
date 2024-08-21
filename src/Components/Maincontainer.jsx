@@ -10,7 +10,7 @@ function Maincontainer() {
     return <p>Loading movie data...</p>; // Add a fallback UI here
   }
 
-  const { overview, id, title } = movie[4];
+  const { overview, id, title } = movie[0];
 
   return (
     <div>

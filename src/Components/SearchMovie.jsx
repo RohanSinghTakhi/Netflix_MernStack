@@ -28,8 +28,8 @@ const SearchMovie = () => {
     }
 
     return (
-        <>
-            <div className='flex justify-center pt-[10%] w-[100%]'>
+        <div className='bg-black 'style={{minHeight:"100vh"}}>
+            <div className='flex justify-center pt-[10%] w-[100%] bg-black'>
                 <form onSubmit={submitHandler} className='w-[50%]'>
                     <div className='flex justify-between shadow-md border-2 p-2 border-gray-200 rounded-lg w-[100%]'>
                         <input value={searchMovie} onChange={(e) => { setSearchMovie(e.target.value) }} className='w-full outline-none rounded-md text-lg' type="text" placeholder='Search Movies...' />
@@ -38,11 +38,14 @@ const SearchMovie = () => {
                 </form>
 
             </div>
+            <div className='text-white'>
+
             {
-                searchedMovie ? ( <MovieList title={movieName} searchMovie={true} movies={searchedMovie}/>) : (<h1>Movie Not Found!!</h1>)
+                searchedMovie ? ( <MovieList className="text-white" title={movieName} searchMovie={true} movies={searchedMovie}/>) : (<h1 className='text-white'>Movie Not Found!!</h1>)
             }
+            </div>
            
-        </>
+        </div>
 
     )
 }
